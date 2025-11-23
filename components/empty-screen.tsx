@@ -11,19 +11,19 @@ export function EmptyScreen() {
           Bem vindo a WangaChat de Iriano!
         </h1>
         <p className="leading-normal text-sm">
-          Chat Ai que iriano criou, com fins unicos de facilitar na coopreensaõ de criptomoedas
-          TradingView stock market widgets.{' '}
+          Chat Ai que iriano criou, com fins unicos de facilitar na coopreensaõ de criptomoedas.
+          A IA não oferece ajuda para casos pessoais, e se lhe forem a ser feito perguntas do tipo poderá dar respostas bizaras.{' '}
           <span className="font-muted-foreground">
-            Built with{' '}
+            começe agora{' '}
             <ExternalLink href="https://sdk.vercel.ai">
-              Vercel AI SDK{' '}
+              uma nova converça...{' '}
             </ExternalLink>
             <ExternalLink href="https://tradingview.com">
-              , TradingView Widgets
+              , sobre
             </ExternalLink>
-            , and powered by{' '}
+            , criptomoedas{' '}
             <ExternalLink href="https://groq.com">
-              Llama3-70b on Groq
+              e outros relacionados
             </ExternalLink>
           </span>
         </p>
