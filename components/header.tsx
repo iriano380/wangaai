@@ -28,7 +28,7 @@ async function UserOrLogin() {
 
       <div className="flex items-center font-semibold">
         <IconSeparator className="size-6 text-muted-foreground/50" />
-        <a href="/new">Binance</a>
+        <a href="https://www.binance.com/activity/referral-entry/CPA?ref=CPA_00PCY3US44">Binance</a>
         <IconSeparator className="size-6 text-muted-foreground/50" />
         <a
           href="/new"
