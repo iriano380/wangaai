@@ -60,7 +60,7 @@ export function Header() {
           style={{ borderRadius: 0 }}
         >
           <IconGitHub />
-          <span className="hidden ml-2 md:flex">GitHub</span>
+          <span className="hidden ml-2 md:flex">Reportar erro</span>
         </a>
       </div>
     </header>
