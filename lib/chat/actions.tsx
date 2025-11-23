@@ -819,17 +819,17 @@ Assistant (you): { "tool_call": { "id": "pending", "type": "function", "function
       id: nanoid(),
       display: (
         <div className="border p-4">
-          <div className="text-red-700 font-medium">Error: {err.message}</div>
+          <div className="text-red-700 font-medium">Falha: {err.message}</div>
           <a
-            href="https://github.com/bklieger-groq/stockbot-on-groq/issues"
+            href="https://chat.whatsapp.com/Gw0Op5BiRKMBplvNqUFZTq?mode=wwt"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center text-sm text-red-800 hover:text-red-900"
           >
-            If you think something has gone wrong, create an
+            Se a falha ainda continuar a ocorre por favor , diga-nos no privado
             <span className="ml-1" style={{ textDecoration: 'underline' }}>
               {' '}
-              issue on Github.
+              Reportar no WhatsApp.
             </span>
           </a>
         </div>
