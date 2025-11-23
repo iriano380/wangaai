@@ -33,9 +33,9 @@ export function ChatPanel({
 
   const exampleMessages = [
     {
-      heading: 'What is the price',
-      subheading: 'of Apple Inc.?',
-      message: 'What is the price of Apple stock?'
+      heading: 'Qual é o preço',
+      subheading: 'do Apple Inc.?',
+      message: 'Qual é o preço do Apple stock?'
     },
     {
       heading: 'Show me a stock chart',
