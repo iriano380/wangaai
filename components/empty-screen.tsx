@@ -8,10 +8,10 @@ export function EmptyScreen() {
     <div className="mx-auto max-w-2xl px-4">
       <div className="flex flex-col gap-2 border bg-background p-8">
         <h1 className="text-lg font-semibold">
-          Welcome to the StockBot powered by Groq!
+          Bem vindo a WangaChat de Iriano!
         </h1>
         <p className="leading-normal text-sm">
-          Open source AI chatbot that uses function calling to render relevant
+          Chat Ai que iriano criou, com fins unicos de facilitar na coopreensaõ de criptomoedas
           TradingView stock market widgets.{' '}
           <span className="font-muted-foreground">
             Built with{' '}
