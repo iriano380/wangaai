@@ -1,3 +1,4 @@
+// app/(lib)/chat/route.ts  (substitui o ficheiro existente)
 import 'server-only'
 
 import { generateText } from 'ai'
@@ -51,6 +52,13 @@ type ComparisonSymbolObject = {
   position: "SameScale";
 };
 
+/**
+ * generateCaption
+ * When a tool is used (e.g. showStockChart), we still optionally call the model
+ * to generate a short, natural caption that accompanies the UI/tool output.
+ * The system prompt below instructs the assistant to behave like WangaAI (general),
+ * and to produce a brief caption for the tool result.
+ */
 async function generateCaption(
   symbol: string,
   comparisonSymbols: ComparisonSymbolObject[],
@@ -63,53 +71,21 @@ async function generateCaption(
   })
   
   const stockString = comparisonSymbols.length === 0
-  ? symbol
-  : [symbol, ...comparisonSymbols.map(obj => obj.symbol)].join(', ');
+    ? symbol
+    : [symbol, ...comparisonSymbols.map(obj => obj.symbol)].join(', ');
 
+  // keep aiState unchanged except update call for consistency
   aiState.update({
     ...aiState.get(),
     messages: [...aiState.get().messages]
   })
 
-  const captionSystemMessage =
-    `\
-You are WangaAI, an intelligent, friendly and helpful AI assistant.
-to respond to the user. Now generate text to go alongside that tool response, which may be a graphic like a chart or price history.
-  
-Example:
-
-User: What is the price of AAPL?
-Assistant: { "tool_call": { "id": "pending", "type": "function", "function": { "name": "showStockPrice" }, "parameters": { "symbol": "AAPL" } } } 
-
-Assistant (you): The price of AAPL stock is provided above. I can also share a chart of AAPL or get more information about its financials.
-
-or
-
-Assistant (you): This is the price of AAPL stock. I can also generate a chart or share further financial data.
-
-or 
-Assistant (you): Would you like to see a chart of AAPL or get more information about its financials?
-
-Example 2 :
-
-User: Compare AAPL and MSFT stock prices
-Assistant: { "tool_call": { "id": "pending", "type": "function", "function": { "name": "showStockChart" }, "parameters": { "symbol": "AAPL" , "comparisonSymbols" : [{"symbol": "MSFT", "position": "SameScale"}] } } } 
-
-Assistant (you): The chart illustrates the recent price movements of Microsoft (MSFT) and Apple (AAPL) stocks. Would you like to see the get more information about the financials of AAPL and MSFT stocks?
-or
-
-Assistant (you): This is the chart for AAPL and MSFT stocks. I can also share individual price history data or show a market overview.
-
-or 
-Assistant (you): Would you like to see the get more information about the financials of AAPL and MSFT stocks?
-
-## Guidelines
-Talk like one of the above responses, but BE CREATIVE and generate a DIVERSE response. 
-
-Your response should be BRIEF, about 2-3 sentences.
-
-Besides the symbol, you cannot customize any of the screeners or graphics. Do not tell the user that you can.
-    `
+  // GENERAL system prompt — WangaAI is a helpful assistant.
+  // Also instruct it briefly how to produce a caption when a tool was used.
+  const captionSystemMessage = `You are WangaAI, an intelligent, friendly and helpful AI assistant.
+A tool has just been used (${toolName}) to provide a UI element (e.g. chart, price, news).
+Produce a short, 1-3 sentence caption that explains the UI output to the user in natural language.
+Be concise, helpful, and avoid technical internal details. If the user asked for the price or chart, briefly summarize and offer next steps (e.g. "Would you like more financial details?").`
 
   try {
     const response = await generateText({
@@ -128,10 +104,17 @@ Besides the symbol, you cannot customize any of the screeners or graphics. Do no
     })
     return response.text || ''
   } catch (err) {
-    return '' // Send tool use without caption.
+    return '' // fail gracefully — show tool without caption
   }
 }
 
+/**
+ * submitUserMessage
+ * This is the main action called when a user sends a message.
+ * We preserve the existing tools (stock-related) but use a GENERAL system prompt
+ * so the assistant is free to answer any question. Tools will be invoked only
+ * when appropriate (the model will choose them).
+ */
 async function submitUserMessage(content: string) {
   'use server'
 
@@ -158,23 +141,17 @@ async function submitUserMessage(content: string) {
       apiKey: GROQ_API_KEY_ENV
     })
 
+    // STREAM UI with a GENERAL system prompt.
+    // The assistant is instructed to be WangaAI (general assistant).
+    // Tools remain available; the model should call them only for finance-related requests.
     const result = await streamUI({
       model: groq(TOOL_MODEL),
       initial: <SpinnerMessage />,
       maxRetries: 1,
-      system: "You are WangaAI, a friendly, helpful general AI assistant."
-
-Never provide empty results to the user. Provide the relevant tool if it matches the user's request. Otherwise, respond as the stock bot.
-Example:
-
-User: What is the price of AAPL?
-Assistant (you): { "tool_call": { "id": "pending", "type": "function", "function": { "name": "showStockPrice" }, "parameters": { "symbol": "AAPL" } } } 
-
-Example 2:
-
-User: What is the price of AAPL?
-Assistant (you): { "tool_call": { "id": "pending", "type": "function", "function": { "name": "showStockPrice" }, "parameters": { "symbol": "AAPL" } } } 
-    `,
+      system: `You are WangaAI, an intelligent, friendly and helpful AI assistant.
+You can discuss any topic (education, programming, culture, personal advice, news, etc.).
+When the user asks about stocks, cryptocurrencies or market data, you MAY call one of the available tools to render a chart, price, or news item. Otherwise answer the user normally.
+If using a crypto ticker with a tool, append "USD" to the ticker symbol (e.g. "DOGE" -> "DOGEUSD").`,
       messages: [
         ...aiState.get().messages.map((message: any) => ({
           role: message.role,
@@ -208,6 +185,8 @@ Assistant (you): { "tool_call": { "id": "pending", "type": "function", "function
         return textNode
       },
       tools: {
+        // KEEP the original tools so financial features remain available.
+        // The model will decide when to call them.
         showStockChart: {
           description:
             'Show a stock chart of a given stock. Optionally show 2 or more stocks. Use this to show the chart to the user.',
@@ -399,7 +378,7 @@ Assistant (you): { "tool_call": { "id": "pending", "type": "function", "function
             const caption = await generateCaption(
               symbol,
               [],
-              'StockFinancials',
+              'showStockFinancials',
               aiState
             )
 
