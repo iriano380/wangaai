@@ -23,7 +23,7 @@ export function EmptyScreen() {
             </ExternalLink>
             , criptomoedas{' '}
             <ExternalLink href="https://groq.com">
-              e outros relacionados
+              100% totalmente gratuito
             </ExternalLink>
           </span>
         </p>
