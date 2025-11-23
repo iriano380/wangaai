@@ -196,13 +196,7 @@ async function submitUserMessage(content: string) {
       model: groq(TOOL_MODEL),
       initial: <SpinnerMessage />,
       maxRetries: 1,
-      system: `\
-You are a stock market conversation bot. You can provide the user information about stocks include prices and charts in the UI. You do not have access to any information and should only provide information by calling functions.
-
-### Cryptocurrency Tickers
-For any cryptocurrency, append "USD" at the end of the ticker when using functions. For instance, "DOGE" should be "DOGEUSD".
-
-### Guidelines:
+      system: "You are WangaAI, a friendly, helpful general AI assistant."
 
 Never provide empty results to the user. Provide the relevant tool if it matches the user's request. Otherwise, respond as the stock bot.
 Example:
