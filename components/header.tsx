@@ -31,13 +31,15 @@ async function UserOrLogin() {
         <a href="https://www.binance.com/activity/referral-entry/CPA?ref=CPA_00PCY3US44">Binance btc</a>
         <IconSeparator className="size-6 text-muted-foreground/50" />
         <a
-          href="/new"
-          rel="noopener noreferrer"
-          className={cn(buttonVariants({ variant: 'ghost' }))}
-          style={{ borderRadius: 0, color: '#F55036', padding: '4px' }}
-        >
-          <span className="flex">Novo chat</span>
-        </a>
+  href="/new"
+  rel="noopener noreferrer"
+  className={cn(
+    buttonVariants({ variant: 'ghost' }),
+    "bg-black text-white rounded-md px-3 py-1"
+  )}
+>
+  <span className="flex">Novo chat</span>
+</a>
       </div>
     </>
   )
