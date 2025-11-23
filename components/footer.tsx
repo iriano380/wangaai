@@ -12,8 +12,7 @@ export function FooterText({ className, ...props }: React.ComponentProps<'p'>) {
       )}
       {...props}
     >
-      StockBot may provide inaccurate information and does not provide
-      investment advice.
+      A WangaChat pode fornecer informações imprecisas e não oferece aconselhamento de investimento.
     </p>
   )
 }
