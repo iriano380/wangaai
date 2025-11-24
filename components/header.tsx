@@ -47,7 +47,7 @@ export function Header() {
           target="_blank"
           href="https://chat.whatsapp.com/Gw0Op5BiRKMBplvNqUFZTq?mode=wwt"
           rel="noopener noreferrer"
-          className={cn(buttonVariants({ variant: 'outline' }))}
+          className={cn(buttonVariants({ variant: 'ghost' }))}
           style={{ borderRadius: 0 }}
         >
           <IconGitHub />
