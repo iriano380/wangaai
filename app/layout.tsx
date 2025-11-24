@@ -14,10 +14,10 @@ export const metadata = {
     : undefined,
   title: {
     default: 'WangaAI Chat',
-    template: `%s - StockBot powered by Groq`
+    template: `%s - Inteligência virtual criada pela IrianoCreative`
   },
   description:
-    'Lightning Fast AI Chatbot that Responds With Live Interactive Stock Charts, Financials, News, Screeners, and More.',
+    'A WangaAI é uma IA Moçambicana gratuita criada pela IrianoCreative Studio em 2025.',
   icons: {
     icon: '/favicon.ico',
     shortcut: '/favicon-16x16.png',
