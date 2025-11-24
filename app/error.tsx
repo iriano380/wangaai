@@ -14,7 +14,7 @@ export default function Error({ error, reset }: ErrorProps) {
 
   return (
     <div className="border p-4">
-      <div className="text-red-700 font-medium">Error: {error.message}</div>
+      <div className="text-red-700 font-medium">Falha: {error.message}</div>
       <div className="flex items-center mt-2">
         <a
           href="https://github.com/bklieger-groq/stockbot-on-groq/issues"
@@ -22,10 +22,10 @@ export default function Error({ error, reset }: ErrorProps) {
           rel="noopener noreferrer"
           className="inline-flex items-center text-sm text-red-800 hover:text-red-900"
         >
-          Please try again. If you encounter the same error, create an
+          Actualize a página ou crie nova converça. caso se repita por favor
           <span className="ml-1" style={{ textDecoration: 'underline' }}>
             {' '}
-            issue on Github.
+            Reporte-nos o erro.
           </span>
         </a>
       </div>
