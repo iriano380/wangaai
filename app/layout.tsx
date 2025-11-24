@@ -54,9 +54,12 @@ export default function RootLayout({ children }: RootLayoutProps) {
           disableTransitionOnChange
         >
           <div className="flex flex-col min-h-screen">
-            <Header />
-            <main className="flex flex-col flex-1 bg-muted/50">{children}</main>
-          </div>
+  <Header />
+  <div className="flex flex-1">
+    <Sidebar />
+    <main className="flex-1 bg-muted/50 p-4">{children}</main>
+  </div>
+</div>
           {/* <ThemeToggle /> */}
         </Providers>
       </body>
