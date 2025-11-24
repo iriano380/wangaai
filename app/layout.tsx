@@ -7,7 +7,6 @@ import { cn } from '@/lib/utils'
 import { Providers } from '@/components/providers'
 import { Header } from '@/components/header'
 import { Toaster } from '@/components/ui/sonner'
-import { Sidebar } from '@/components/Sidebar'
 
 export const metadata = {
   metadataBase: process.env.VERCEL_URL
@@ -55,12 +54,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
           disableTransitionOnChange
         >
           <div className="flex flex-col min-h-screen">
-  <Header />
-  <div className="flex flex-1">
-    <Sidebar />
-    <main className="flex-1 bg-muted/50 p-4">{children}</main>
-  </div>
-</div>
+            <Header />
+            <main className="flex flex-col flex-1 bg-muted/50">{children}</main>
+          </div>
           {/* <ThemeToggle /> */}
         </Providers>
       </body>
