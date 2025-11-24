@@ -29,19 +29,6 @@ async function UserOrLogin() {
       <div className="flex items-center font-semibold">
         <a href="https://www.binance.com/activity/referral-entry/CPA?ref=CPA_00PCY3US44"></a>
         <a
-  href="/new"
-  rel="noopener noreferrer"
-  className={cn(
-    buttonVariants({ variant: 'ghost' }),
-    "bg-black text-white rounded-md px-3 py-1"
-  )}
->
-  <span className="flex">Novo chat</span>
-</a>
-      </div>
-    </>
-  )
-}
 
 export function Header() {
   return (
