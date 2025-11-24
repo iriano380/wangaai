@@ -17,7 +17,7 @@ export const metadata = {
     template: `%s - Inteligência virtual criada pela IrianoCreative`
   },
   description:
-    'A WangaAI é uma IA Moçambicana gratuita criada pela IrianoCreative Studio em 2025.',
+    'WangaAI é uma inteligência artificial avançada, desenvolvida por Iriano Gonçalves Chimanbane e sua empresa IrianoCreative Studio, com o objetivo de oferecer soluções inteligentes e personalizadas para os usuários moçambicanos e do mundo lusófono. Seu nome, Wanga, homenageia a irmã mais nova do criador, simbolizando inovação, cuidado e proximidade humana.',
   icons: {
     icon: '/favicon.ico',
     shortcut: '/favicon-16x16.png',
