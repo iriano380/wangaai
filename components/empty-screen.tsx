@@ -8,7 +8,7 @@ export function EmptyScreen() {
     <div className="mx-auto max-w-2xl px-4">
       <div className="flex flex-col gap-2 border bg-background p-8">
         <h1 className="text-lg font-semibold">
-          Bem vindo a WangaChat de Iriano!
+          Bem vindo a WangaAI Gratuita!
         </h1>
         <p className="leading-normal text-sm">
           Chat Ai que iriano criou, com fins unicos de facilitar na coopreensaõ de criptomoedas.
