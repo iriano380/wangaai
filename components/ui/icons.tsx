@@ -163,7 +163,7 @@ function IconSeparator({ className, ...props }: React.ComponentProps<'svg'>) {
       className={cn('size-4', className)}
       {...props}
     >
-      <path d="M16.88 3.549L7.12 20.451"></path>
+      <path d="6.88 3.549L7.12 20.451"></path>
     </svg>
   )
 }
