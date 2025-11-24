@@ -11,16 +11,16 @@ export function EmptyScreen() {
           Bem vindo a WangaAI Gratuita!
         </h1>
         <p className="leading-normal text-sm">
-          WangaAI combina tecnologia de ponta e conhecimento local para oferecer respostas precisas, criação de conteúdos e assistência inteligente em qualquer tarefa.{' '}
+          WangaAI é a inteligência artificial feita em Moçambique, criada por Iriano Gonçalves Chimanbane e sua empresa IrianoCreative Studio. Nomeada em homenagem à irmã do criador, WangaAI combina tecnologia de ponta e conhecimento local para oferecer respostas precisas, criação de conteúdos e assistência inteligente em qualquer tarefa.{' '}
           <span className="font-muted-foreground">
             começe agora{' '}
-            <ExternalLink href="https://sdk.vercel.ai">
+            <ExternalLink href="https://wangaai.vercel.app/">
               Inovaçao e cultura{' '}
             </ExternalLink>
-            <ExternalLink href="https://tradingview.com">
-              , i
+            <ExternalLink href="https://wangaai.vercel.app/">
+              , totalmente
             </ExternalLink>
-            , Moçambicana{' '}
+            , Moçambicana para o mundo{' '}
             <ExternalLink href="https://wangaai.vercel.app/new">
               ao seu alcançe
             </ExternalLink>
