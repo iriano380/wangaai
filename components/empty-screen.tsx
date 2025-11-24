@@ -11,19 +11,18 @@ export function EmptyScreen() {
           Bem vindo a WangaAI Gratuita!
         </h1>
         <p className="leading-normal text-sm">
-          Chat Ai que iriano criou, com fins unicos de facilitar na coopreensaõ de criptomoedas.
-          A IA não oferece ajuda para casos pessoais, e se lhe forem a ser feito perguntas do tipo poderá dar respostas bizaras.{' '}
+          WangaAI combina tecnologia de ponta e conhecimento local para oferecer respostas precisas, criação de conteúdos e assistência inteligente em qualquer tarefa.{' '}
           <span className="font-muted-foreground">
             começe agora{' '}
             <ExternalLink href="https://sdk.vercel.ai">
-              uma nova converça...{' '}
+              Inovaçao e cultura{' '}
             </ExternalLink>
             <ExternalLink href="https://tradingview.com">
-              , sobre
+              , i
             </ExternalLink>
-            , criptomoedas{' '}
-            <ExternalLink href="https://groq.com">
-              100% totalmente gratuito
+            , Moçambicana{' '}
+            <ExternalLink href="https://wangaai.vercel.app/new">
+              ao seu alcançe
             </ExternalLink>
           </span>
         </p>
