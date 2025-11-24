@@ -149,6 +149,25 @@ function IconGitHub({ className, ...props }: React.ComponentProps<'svg'>) {
   )
 }
 
+function IconSeparator({ className, ...props }: React.ComponentProps<'svg'>) {
+  return (
+    <svg
+      fill="none"
+      shapeRendering="geometricPrecision"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="1"
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+      className={cn('size-4', className)}
+      {...props}
+    >
+      <path d="M16.88 3.549L7.12 20.451"></path>
+    </svg>
+  )
+}
+
 function IconArrowDown({ className, ...props }: React.ComponentProps<'svg'>) {
   return (
     <svg
@@ -483,4 +502,4 @@ export {
   IconUsers,
   IconExternalLink,
   IconChevronUpDown
-}
+      }
