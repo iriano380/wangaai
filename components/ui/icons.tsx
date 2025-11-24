@@ -88,6 +88,7 @@ function IconNextChat({
   )
 }
 
+
 function IconOpenAI({ className, ...props }: React.ComponentProps<'svg'>) {
   return (
     <svg
