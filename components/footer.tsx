@@ -12,7 +12,7 @@ export function FooterText({ className, ...props }: React.ComponentProps<'p'>) {
       )}
       {...props}
     >
-      A WangaChat pode fornecer informações imprecisas e não oferece aconselhamento de investimento.
+      A WangaChat @2025 todos os direitos autorais reservados.
     </p>
   )
 }
