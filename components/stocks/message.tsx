@@ -14,16 +14,16 @@ import { useStreamableText } from '@/lib/hooks/use-streamable-text'
 
 export function UserMessage({ children }: { children: React.ReactNode }) {
   return (
-    <div className="group relative flex items-start justify-end md:-ml-12 w-full">
-      {/* Mensagem alinhada à direita */}
-      <div className="flex-1 flex justify-end pr-2">
-        <div className="w-fit max-w-[80%] rounded-xl bg-[#ff5722] px-4 py-2 text-white shadow">
+    <div className="group relative flex items-start justify-end w-full">
+      {/* Área do balão do usuário */}
+      <div className="flex-1 flex justify-end">
+        <div className="w-fit max-w-[80%] rounded-xl bg-[#ff5722] px-4 py-2 text-white shadow mr-2">
           {children}
         </div>
       </div>
 
-      {/* Avatar do usuário no lado direito */}
-      <div className="flex size-[25px] shrink-0 select-none items-center justify-center rounded-md border bg-background shadow-sm ml-2">
+      {/* Avatar do usuário */}
+      <div className="flex size-[25px] shrink-0 select-none items-center justify-center rounded-md border bg-background shadow-sm">
         <IconUser />
       </div>
     </div>
