@@ -33,14 +33,14 @@ export function ChatPanel({
 
   const exampleMessages = [
     {
-      heading: 'Qual é o preço',
-      subheading: 'do Apple Inc.?',
-      message: 'Qual é o preço do Apple stock?'
+      heading: 'O que há de novo em Moçambique',
+      subheading: 'Novidades do país.?',
+      message: 'O que há de novo em moçambique?'
     },
     {
-      heading: 'Show me a stock chart',
-      subheading: 'for $GOOGL',
-      message: 'Show me a stock chart for $GOOGL'
+      heading: 'Qual é a origem da WangaChat?',
+      subheading: 'me conheça melhor',
+      message: 'Qual é a origem da wangaAi?'
     },
     {
       heading: 'What are some recent',
