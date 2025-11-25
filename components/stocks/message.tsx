@@ -13,16 +13,17 @@ import { useStreamableText } from '@/lib/hooks/use-streamable-text'
 // Different types of message bubbles.
 
 export function UserMessage({ children }: { children: React.ReactNode }) {
+export function UserMessage({ children }: { children: React.ReactNode }) {
   return (
     <div className="group relative flex items-start justify-end w-full">
-      {/* Balão do usuário */}
+      {/* Área do balão do usuário */}
       <div className="flex-1 flex justify-end">
-        <div className="w-max max-w-[95%] rounded-xl bg-[#ff5722] px-4 py-2 text-white shadow mr-2">
+        <div className="w-fit max-w-[80%] rounded-xl bg-[#ff5722] px-4 py-2 text-white shadow mr-2">
           {children}
         </div>
       </div>
 
-      {/* Avatar */}
+      {/* Avatar do usuário */}
       <div className="flex size-[25px] shrink-0 select-none items-center justify-center rounded-md border bg-background shadow-sm">
         <IconUser />
       </div>
