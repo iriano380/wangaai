@@ -87,42 +87,19 @@ export function ChatPanel({
       />
 
       <div className="mx-auto sm:max-w-2xl sm:px-4">
-        <div className="mb-4 grid grid-cols-2 gap-2 px-4 sm:px-0">
-          {messages.length === 0 &&
-            randExamples.map((example, index) => (
-              <div
-                key={example.heading}
-                className={`
-                    cursor-pointer border bg-white p-4 
-                    hover:bg-zinc-50 dark:bg-zinc-950 dark:hover:bg-zinc-900
-                    ${index >= 4 ? 'hidden md:block' : ''}
-                    ${index >= 2 ? 'hidden 2xl:block' : ''}
-                  `}
-                onClick={async () => {
-                  setMessages(currentMessages => [
-                    ...currentMessages,
-                    {
-                      id: nanoid(),
-                      display: <UserMessage>{example.message}</UserMessage>
-                    }
-                  ])
-
-                  const responseMessage = await submitUserMessage(
-                    example.message
-                  )
-                  setMessages(currentMessages => [
-                    ...currentMessages,
-                    responseMessage
-                  ])
-                }}
-              >
-                <div className="text-sm font-semibold">{example.heading}</div>
-                <div className="text-sm text-zinc-600">
-                  {example.subheading}
-                </div>
-              </div>
-            ))}
-        </div>
+        {messages.length === 0 && (
+  <div className="px-6 py-8 text-center text-zinc-700 dark:text-zinc-300">
+    <h2 className="text-xl font-semibold mb-2">
+      👋 Olá, sou a WangaAI!
+    </h2>
+    <p className="text-base leading-relaxed">
+      A primeira inteligência artificial completa criada em Moçambique.  
+      Estou pronta para te ajudar com qualquer pergunta ou curiosidade.
+      <br />  
+      <span className="font-medium">Escreve uma mensagem abaixo para começarmos.</span>
+    </p>
+  </div>
+)}
 
         <div className="space-y-4 border-t bg-background px-4 py-2 shadow-lg sm:border md:py-4">
           <PromptForm input={input} setInput={setInput} />
