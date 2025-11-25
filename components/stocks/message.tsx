@@ -28,28 +28,64 @@ export function UserMessage({ children }: { children: React.ReactNode }) {
       </div>
     </div>
   )
-          }
+}
 
-export function BotMessage({ content, className }: any) {
+export function BotMessage({
+  content,
+  className
+}: {
+  content: string | StreamableValue<string>
+  className?: string
+}) {
   const text = useStreamableText(content)
 
   return (
-    <div className={cn('group relative flex items-start w-full', className)}>
-      {/* Avatar na esquerda */}
-      <div className="flex size-[24px] shrink-0 select-none items-center justify-center rounded-md border bg-[#f55036] text-primary-foreground shadow-sm mr-2">
+    <div className={cn('group relative flex items-start md:-ml-12', className)}>
+      <div className="flex size-[24px] shrink-0 select-none items-center justify-center rounded-md border bg-[#f55036] text-primary-foreground shadow-sm">
         <IconGroq />
       </div>
+      <div className="ml-4 flex-1 space-y-2 overflow-hidden px-1">
+        <MemoizedReactMarkdown
+          className="prose break-words dark:prose-invert prose-p:leading-relaxed prose-pre:p-0"
+          remarkPlugins={[remarkGfm, remarkMath]}
+          components={{
+            p({ children }) {
+              return <p className="mb-2 last:mb-0">{children}</p>
+            },
+            code({ node, inline, className, children, ...props }) {
+              if (children.length) {
+                if (children[0] == '▍') {
+                  return (
+                    <span className="mt-1 animate-pulse cursor-default">▍</span>
+                  )
+                }
 
-      {/* Mensagem alinhada à esquerda */}
-      <div className="flex-1 flex justify-start pl-2">
-        <div className="w-fit max-w-[80%] rounded-xl bg-white dark:bg-neutral-900 px-4 py-2 shadow">
-          <MemoizedReactMarkdown
-            className="prose break-words dark:prose-invert prose-p:leading-relaxed prose-pre:p-0"
-            remarkPlugins={[remarkGfm, remarkMath]}
-          >
-            {text}
-          </MemoizedReactMarkdown>
-        </div>
+                children[0] = (children[0] as string).replace('`▍`', '▍')
+              }
+
+              const match = /language-(\w+)/.exec(className || '')
+
+              if (inline) {
+                return (
+                  <code className={className} {...props}>
+                    {children}
+                  </code>
+                )
+              }
+
+              return (
+                <CodeBlock
+                  key={Math.random()}
+                  language={(match && match[1]) || ''}
+                  value={String(children).replace(/\n$/, '')}
+                  {...props}
+                />
+              )
+            }
+          }}
+        >
+          {text}
+        </MemoizedReactMarkdown>
       </div>
     </div>
   )
@@ -100,4 +136,4 @@ export function SpinnerMessage() {
       </div>
     </div>
   )
-}
+            }
