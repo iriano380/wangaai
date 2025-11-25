@@ -55,7 +55,8 @@ export function PromptForm({
           const responseMessage = await submitUserMessage(value, apiKey)
           setMessages(current => [...current, responseMessage])
         }}
-        className="w-full max-w-[750px] bg-white/90 dark:bg-gray-900/90 backdrop-blur-md border border-gray-300/40 dark:border-gray-700/40 rounded-2xl shadow-2xl flex items-center p-3 sm:p-4"
+        className="w-full max-w-[750px] bg-white/90 dark:bg-gray-900/90 backdrop-blur-md rounded-2xl shadow-2xl flex items-center p-3 sm:p-4
+          border-4 border-[#F05237] animate-pulse-ia"
       >
         {/* Botão de novo chat */}
         <Tooltip>
@@ -98,7 +99,7 @@ export function PromptForm({
               <Button
                 type="submit"
                 size="icon"
-                className="ml-2 rounded-full bg-[#F05237] hover:bg-[#1d4ed8] text-white shadow-lg transition-all duration-200"
+                className="ml-2 rounded-full bg-[#F05237] hover:bg-[#d43b1f] text-white shadow-lg transition-all duration-200"
               >
                 <IconArrowDown className="rotate-90" />
               </Button>
@@ -107,6 +108,17 @@ export function PromptForm({
           </Tooltip>
         )}
       </form>
+
+      {/* CSS Animado para a borda piscando */}
+      <style jsx>{`
+        @keyframes pulse-border-ia {
+          0%, 100% { border-color: #F05237; }
+          50% { border-color: #FF8C6A; }
+        }
+        .animate-pulse-ia {
+          animation: pulse-border-ia 1.2s infinite;
+        }
+      `}</style>
     </div>
   )
-}
+      }
