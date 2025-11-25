@@ -98,7 +98,7 @@ export function PromptForm({
               <Button
                 type="submit"
                 size="icon"
-                className="ml-2 rounded-full bg-[#2563eb] hover:bg-[#1d4ed8] text-white shadow-lg transition-all duration-200"
+                className="ml-2 rounded-full bg-[#F05237] hover:bg-[#1d4ed8] text-white shadow-lg transition-all duration-200"
               >
                 <IconArrowDown className="rotate-90" />
               </Button>
