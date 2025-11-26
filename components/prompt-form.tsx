@@ -82,36 +82,51 @@ export function PromptForm({
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 8 }}
                 transition={{ duration: 0.2 }}
-                className="absolute left-0 bottom-16 bg-white dark:bg-gray-900 shadow-xl border rounded-xl p-3 w-44 flex flex-col gap-2 z-50"
+                className="absolute left-0 bottom-16 bg-white dark:bg-gray-900 shadow-xl border rounded-xl p-3 w-48 flex flex-col gap-2 z-50"
               >
+                {/* NOVO CHAT */}
                 <button
                   onClick={() => {
                     setMenuOpen(false)
                     router.push('/new')
                   }}
-                  className="text-left px-2 py-1 rounded-md hover:bg-gray-200 dark:hover:bg-gray-800 transition"
+                  className="flex items-center gap-2 px-2 py-1 rounded-md hover:bg-gray-200 dark:hover:bg-gray-800 transition text-left"
                 >
-                  🆕 Novo Chat
+                  <span dangerouslySetInnerHTML={{ __html: `
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
+                      <path d="M2.5 7C2.5 9.48528 4.51472 11.5 7 11.5C9.48528 11.5 11.5 9.48528 11.5 7C11.5 4.51472 9.48528 2.5 7 2.5C4.51472 2.5 2.5 4.51472 2.5 7ZM2.5 17C2.5 19.4853 4.51472 21.5 7 21.5C9.48528 21.5 11.5 19.4853 11.5 17C11.5 14.5147 9.48528 12.5 7 12.5C4.51472 12.5 2.5 14.5147 2.5 17ZM12.5 17C12.5 19.4853 14.5147 21.5 17 21.5C19.4853 21.5 21.5 19.4853 21.5 17C21.5 14.5147 19.4853 12.5 17 12.5C14.5147 12.5 12.5 14.5147 12.5 17ZM16 11V8H13V6H16V3H18V6H21V8H18V11H16Z"></path></svg>
+                  ` }} />
+                  Novo Chat
                 </button>
 
+                {/* HISTÓRICO */}
                 <button
                   onClick={() => {
                     setMenuOpen(false)
                     router.push('/history')
                   }}
-                  className="text-left px-2 py-1 rounded-md hover:bg-gray-200 dark:hover:bg-gray-800 transition"
+                  className="flex items-center gap-2 px-2 py-1 rounded-md hover:bg-gray-200 dark:hover:bg-gray-800 transition text-left"
                 >
-                  📜 Histórico
+                  <span dangerouslySetInnerHTML={{ __html: `
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
+                      <path d="M2.5 7C2.5 9.48528 4.51472 11.5 7 11.5C9.48528 11.5 11.5 9.48528 11.5 7C11.5 4.51472 9.48528 2.5 7 2.5C4.51472 2.5 2.5 4.51472 2.5 7ZM2.5 17C2.5 19.4853 4.51472 21.5 7 21.5C9.48528 21.5 11.5 19.4853 11.5 17C11.5 14.5147 9.48528 12.5 7 12.5C4.51472 12.5 2.5 14.5147 2.5 17ZM12.5 17C12.5 19.4853 14.5147 21.5 17 21.5C19.4853 21.5 21.5 19.4853 21.5 17C21.5 14.5147 19.4853 12.5 17 12.5C14.5147 12.5 12.5 14.5147 12.5 17ZM16 11V8H13V6H16V3H18V6H21V8H18V11H16Z"></path></svg>
+                  ` }} />
+                  Histórico
                 </button>
 
+                {/* DEFINIÇÕES */}
                 <button
                   onClick={() => {
                     setMenuOpen(false)
                     router.push('/settings')
                   }}
-                  className="text-left px-2 py-1 rounded-md hover:bg-gray-200 dark:hover:bg-gray-800 transition"
+                  className="flex items-center gap-2 px-2 py-1 rounded-md hover:bg-gray-200 dark:hover:bg-gray-800 transition text-left"
                 >
-                  ⚙️ Definições
+                  <span dangerouslySetInnerHTML={{ __html: `
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
+                      <path d="M2 11.9998C2 11.1353 2.1097 10.2964 2.31595 9.49631C3.40622 9.55283 4.48848 9.01015 5.0718 7.99982C5.65467 6.99025 5.58406 5.78271 4.99121 4.86701C6.18354 3.69529 7.66832 2.82022 9.32603 2.36133C9.8222 3.33385 10.8333 3.99982 12 3.99982C13.1667 3.99982 14.1778 3.33385 14.674 2.36133C16.3317 2.82022 17.8165 3.69529 19.0088 4.86701C18.4159 5.78271 18.3453 6.99025 18.9282 7.99982C19.5115 9.01015 20.5938 9.55283 21.6841 9.49631C21.8903 10.2964 22 11.1353 22 11.9998C22 12.8643 21.8903 13.7032 21.6841 14.5033C20.5938 14.4468 19.5115 14.9895 18.9282 15.9998C18.3453 17.0094 18.4159 18.2169 19.0088 19.1326C17.8165 20.3043 16.3317 21.1794 14.674 21.6383C14.1778 20.6658 13.1667 19.9998 12 19.9998C10.8333 19.9998 9.8222 20.6658 9.32603 21.6383C7.66832 21.1794 6.18354 20.3043 4.99121 19.1326C5.58406 18.2169 5.65467 17.0094 5.0718 15.9998C4.48848 14.9895 3.40622 14.4468 2.31595 14.5033C2.1097 13.7032 2 12.8643 2 11.9998ZM12 14.9998C10.3431 14.9998 9 13.6567 9 11.9998C9 10.343 10.3431 8.99982 12 8.99982C13.6569 8.99982 15 10.343 15 11.9998C15 13.6567 13.6569 14.9998 12 14.9998Z"></path></svg>
+                  ` }} />
+                  Definições
                 </button>
               </motion.div>
             )}
@@ -167,4 +182,4 @@ export function PromptForm({
       `}</style>
     </div>
   )
-  }
+          }
