@@ -2,28 +2,24 @@
 
 import { useUIState } from 'ai/rsc'
 import { type AI } from '@/lib/chat/actions'
-import Link from 'next/link'
 
 export default function HistoryPage() {
   const [messages] = useUIState<typeof AI>()
 
   return (
-    <div className="max-w-2xl mx-auto p-4">
+    <div className="min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white p-6">
       <h1 className="text-2xl font-bold mb-4">Histórico de Conversas</h1>
 
       {messages.length === 0 ? (
-        <p className="text-gray-500">Nenhuma conversa ainda.</p>
+        <p className="text-gray-500">Nenhuma conversa encontrada.</p>
       ) : (
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-4">
           {messages.map(msg => (
             <div
               key={msg.id}
-              className="p-3 border rounded-lg bg-white dark:bg-gray-900"
+              className="p-4 rounded-xl border bg-white dark:bg-gray-800 shadow-md"
             >
-              {typeof msg.display === 'string'
-                ? msg.display
-                : <div>{msg.display}</div>
-              }
+              {msg.display}
             </div>
           ))}
         </div>
