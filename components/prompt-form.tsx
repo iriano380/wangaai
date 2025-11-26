@@ -12,6 +12,7 @@ import { useEnterSubmit } from '@/lib/hooks/use-enter-submit'
 import { nanoid } from 'nanoid'
 import { useRouter } from 'next/navigation'
 import { useLocalStorage } from '@/lib/hooks/use-local-storage'
+import { motion, AnimatePresence } from 'framer-motion'
 
 export function PromptForm({
   input,
@@ -26,6 +27,8 @@ export function PromptForm({
   const { submitUserMessage } = useActions()
   const [_, setMessages] = useUIState<typeof AI>()
   const [apiKey, setApiKey] = useLocalStorage('groqKey', '')
+
+  const [menuOpen, setMenuOpen] = React.useState(false)
 
   React.useEffect(() => {
     if (inputRef.current) inputRef.current.focus()
@@ -53,31 +56,76 @@ export function PromptForm({
           const responseMessage = await submitUserMessage(value, apiKey)
           setMessages(current => [...current, responseMessage])
         }}
-        className="w-full max-w-[750px] bg-white/90 dark:bg-gray-900/90 backdrop-blur-md rounded-2xl shadow-2xl flex items-center
-          p-2 sm:p-2 border-4 border-[#F05237] animate-pulse-ia"
+        className="w-full max-w-[720px] bg-white/90 dark:bg-gray-900/90 backdrop-blur-md rounded-2xl shadow-xl 
+        flex items-center gap-3 p-2 sm:p-3 border-4 border-[#F05237] animate-pulse-ia"
       >
-        {/* Botão de novo chat */}
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="rounded-full hover:bg-gray-200 dark:hover:bg-gray-800"
-              onClick={() => router.push('/new')}
-            >
-              <IconPlus className="size-6" />
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent>Novo chat</TooltipContent>
-        </Tooltip>
+        {/* BOTÃO + + MENU */}
+        <div className="relative">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="rounded-full hover:bg-gray-200 dark:hover:bg-gray-800 transition"
+            onClick={() => setMenuOpen(!menuOpen)}
+          >
+            <IconPlus
+              className={`size-6 transition-transform duration-300 ${
+                menuOpen ? 'rotate-45' : ''
+              }`}
+            />
+          </Button>
 
-        {/* Campo de texto */}
+          {/* MENU ANIMADO */}
+          <AnimatePresence>
+            {menuOpen && (
+              <motion.div
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 8 }}
+                transition={{ duration: 0.2 }}
+                className="absolute left-0 top-12 bg-white dark:bg-gray-900 shadow-xl border rounded-xl p-3 w-44 flex flex-col gap-2 z-50"
+              >
+                <button
+                  onClick={() => {
+                    setMenuOpen(false)
+                    router.push('/new')
+                  }}
+                  className="text-left px-2 py-1 rounded-md hover:bg-gray-200 dark:hover:bg-gray-800 transition"
+                >
+                  🆕 Novo Chat
+                </button>
+
+                <button
+                  onClick={() => {
+                    setMenuOpen(false)
+                    router.push('/history')
+                  }}
+                  className="text-left px-2 py-1 rounded-md hover:bg-gray-200 dark:hover:bg-gray-800 transition"
+                >
+                  📜 Histórico
+                </button>
+
+                <button
+                  onClick={() => {
+                    setMenuOpen(false)
+                    router.push('/settings')
+                  }}
+                  className="text-left px-2 py-1 rounded-md hover:bg-gray-200 dark:hover:bg-gray-800 transition"
+                >
+                  ⚙️ Definições
+                </button>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+
+        {/* CAMPO DE TEXTO */}
         <Textarea
           ref={inputRef}
           tabIndex={0}
           onKeyDown={onKeyDown}
           placeholder="Digite a sua mensagem..."
-          className="flex-1 resize-none bg-transparent px-3 py-1.5 text-base sm:text-lg placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:outline-none"
+          className="flex-1 resize-none bg-transparent px-4 py-1 text-base sm:text-lg 
+          placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:outline-none"
           autoFocus
           spellCheck={false}
           autoComplete="off"
@@ -87,17 +135,17 @@ export function PromptForm({
           value={input}
           onChange={e => setInput(e.target.value)}
           minRows={1}
-          maxRows={4} // reduz altura máxima
+          maxRows={5}
         />
 
-        {/* Botão de envio (só aparece se tiver texto) */}
+        {/* BOTÃO DE ENVIAR */}
         {hasText && (
           <Tooltip>
             <TooltipTrigger asChild>
               <Button
                 type="submit"
                 size="icon"
-                className="ml-2 rounded-full bg-[#F05237] hover:bg-[#d43b1f] text-white shadow-lg transition-all duration-200"
+                className="rounded-full bg-[#F05237] hover:bg-[#d43b1f] text-white shadow-lg transition-all"
               >
                 <IconArrowDown className="rotate-90" />
               </Button>
@@ -107,6 +155,7 @@ export function PromptForm({
         )}
       </form>
 
+      {/* ANIMAÇÃO DA BORDA */}
       <style jsx>{`
         @keyframes pulse-border-ia {
           0%, 100% { border-color: #F05237; }
@@ -118,4 +167,4 @@ export function PromptForm({
       `}</style>
     </div>
   )
-          }
+}
