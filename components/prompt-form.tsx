@@ -82,7 +82,7 @@ export function PromptForm({
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 8 }}
                 transition={{ duration: 0.2 }}
-                className="absolute left-0 top-12 bg-white dark:bg-gray-900 shadow-xl border rounded-xl p-3 w-44 flex flex-col gap-2 z-50"
+                className="absolute left-0 bottom-16 bg-white dark:bg-gray-900 shadow-xl border rounded-xl p-3 w-44 flex flex-col gap-2 z-50"
               >
                 <button
                   onClick={() => {
