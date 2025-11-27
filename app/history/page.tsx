@@ -9,11 +9,11 @@ export default function HistoryPage() {
   const router = useRouter()
   const [messages] = useUIState<typeof AI>()
 
-  // Filtra mensagens INCLUINDO role (mas teu sistema usa "display")
+  // NÃO USE ROLE — TEU OBJETO NÃO TEM ROLE
   const historyMessages = messages.filter(m => m.display)
 
   return (
-    <div className="min-h-screen bg-gray-100 dark:bg-gray-900 p-6 text-gray-900 dark:text-white">
+    <div className="min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white p-6">
       <h1 className="text-3xl font-bold mb-6">Histórico de Conversas</h1>
 
       {historyMessages.length === 0 ? (
