@@ -1,9 +1,9 @@
 <h2 align="center">
  <br>
- <img src="https://i.imgur.com/f1C7EdN.png" alt="AI StockBot Powered by Groq with Tool Use and Generative UI" width="250">
+ <img src="https://i.imgur.com/f1C7EdN.png" alt="WnagaChat da IrianoCreative Studio" width="250">
  <br>
  <br>
- StockBot Powered by Groq: Lightning Fast AI Chatbot that Responds With Live Interactive Stock Charts, Financials, News, Screeners, and More 
+ Wangachat: É uma IA que atende a diversos assuntos pessoais ou empresariais de quaisquer género 
  <br>
 </h2>
 
