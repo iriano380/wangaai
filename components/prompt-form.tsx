@@ -61,7 +61,7 @@ export function PromptForm({
                 hover:bg-gray-100 dark:hover:bg-gray-800 transition text-left"
               >
                 <span dangerouslySetInnerHTML={{ __html: `
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" class="w-5 h-5">
                     <path d="M16 11V8H13V6H16V3H18V6H21V8H18V11H16Z"/>
                   </svg>
                 ` }} />
@@ -80,7 +80,7 @@ export function PromptForm({
                 hover:bg-gray-100 dark:hover:bg-gray-800 transition text-left"
               >
                 <span dangerouslySetInnerHTML={{ __html: `
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" class="w-5 h-5">
                     <path d="M12 8V13H16V15H10V8H12Z"/>
                   </svg>
                 ` }} />
@@ -99,7 +99,7 @@ export function PromptForm({
                 hover:bg-gray-100 dark:hover:bg-gray-800 transition text-left"
               >
                 <span dangerouslySetInnerHTML={{ __html: `
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" class="w-5 h-5">
                     <path d="M12 8.99982C10.3431 8.99982 9 10.343 9 11.9998C9 13.6567 10.3431 14.9998 12 14.9998C13.6569 14.9998 15 13.6567 15 11.9998C15 10.343 13.6569 8.99982 12 8.99982Z"/>
                   </svg>
                 ` }} />
