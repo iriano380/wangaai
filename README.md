@@ -1,6 +1,6 @@
 <h2 align="center">
  <br>
- <img src="https://wow.groq.com/groq-labs/" alt="WnagaChat da IrianoCreative Studio" width="250">
+ <img src="https://wangaai.vercel.app/_next/image?url=%2Fgroqlabs-logo-black.png&w=256&q=75" alt="WnagaChat da IrianoCreative Studio" width="250">
  <br>
  <br>
  Wangachat: É uma IA que atende a diversos assuntos pessoais ou empresariais de quaisquer género 
