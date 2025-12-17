@@ -1,28 +1,18 @@
 'use client'
 
 import { useEffect } from 'react'
-import { useParams } from 'next/navigation'
 import { useUIState } from 'ai/rsc'
-import { UserMessage } from '@/components/stocks/message'
+import { useParams } from 'next/navigation'
 import { getHistory } from '@/lib/chat/history'
+import { UserMessage } from '@/components/stocks/message'
 import { AI } from 'ai'
 
 export default function ChatPage() {
   const params = useParams()
-  
-  return (
-    <AI>
-      <ChatLoader chatId={params.id} />
-    </AI>
-  )
-}
-
-/* Componente separado para carregar as mensagens */
-function ChatLoader({ chatId }: { chatId: string }) {
-  const [_, setMessages] = useUIState()
+  const [_, setMessages] = useUIState<typeof AI>()
 
   useEffect(() => {
-    const chat = getHistory().find(c => c.id === chatId)
+    const chat = getHistory().find(c => c.id === params.id)
     if (!chat) return
 
     setMessages(
@@ -34,7 +24,11 @@ function ChatLoader({ chatId }: { chatId: string }) {
             : m.content
       }))
     )
-  }, [chatId, setMessages])
+  }, [])
 
-  return null
-}
+  return (
+    <AI>
+      {/* O teu componente de chat real pode ir aqui */}
+    </AI>
+  )
+      }
