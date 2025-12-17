@@ -8,19 +8,20 @@ import { getHistory } from '@/lib/chat/history'
 
 export default function ChatPage() {
   const params = useParams()
-  return <ChatLoader chatId={params.id} />
+  const chatId = Array.isArray(params.id) ? params.id[0] : params.id
+
+  if (!chatId) return <p>Chat não encontrado</p>
+
+  return <ChatLoader chatId={chatId} />
 }
 
-/* Componente que carrega as mensagens do chat histórico */
 function ChatLoader({ chatId }: { chatId: string }) {
   const [_, setMessages] = useUIState()
 
   useEffect(() => {
-    // Pega o chat do histórico pelo id
     const chat = getHistory().find(c => c.id === chatId)
     if (!chat) return
 
-    // Popula o estado do chat com mensagens
     setMessages(
       chat.messages.map(m => ({
         id: crypto.randomUUID(),
