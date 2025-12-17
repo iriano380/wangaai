@@ -1,5 +1,6 @@
 'use client'
 
+import * as React from 'react'
 import { IconGroq, IconUser } from '@/components/ui/icons'
 import { cn } from '@/lib/utils'
 import { spinner } from './spinner'
@@ -7,23 +8,71 @@ import { CodeBlock } from '../ui/codeblock'
 import { MemoizedReactMarkdown } from '../markdown'
 import remarkGfm from 'remark-gfm'
 import remarkMath from 'remark-math'
-import { StreamableValue, useStreamableValue } from 'ai/rsc'
+import { StreamableValue } from 'ai/rsc'
 import { useStreamableText } from '@/lib/hooks/use-streamable-text'
+import {
+  Copy,
+  RefreshCcw,
+  ThumbsUp,
+  ThumbsDown
+} from 'lucide-react'
 
-// Different types of message bubbles.
+/* ======================================================
+   AÇÕES DA MENSAGEM DA IA (copiar, regenerar, etc.)
+   ====================================================== */
+
+function BotActions({ text }: { text: string }) {
+  const copyToClipboard = async () => {
+    await navigator.clipboard.writeText(text)
+  }
+
+  return (
+    <div className="mt-2 flex items-center gap-3 text-gray-400 opacity-0 transition-opacity group-hover:opacity-100">
+      <button
+        onClick={copyToClipboard}
+        className="hover:text-gray-600 dark:hover:text-gray-300"
+        title="Copiar"
+      >
+        <Copy size={14} />
+      </button>
+
+      <button
+        className="hover:text-gray-600 dark:hover:text-gray-300"
+        title="Regenerar"
+      >
+        <RefreshCcw size={14} />
+      </button>
+
+      <button
+        className="hover:text-green-500"
+        title="Gostei"
+      >
+        <ThumbsUp size={14} />
+      </button>
+
+      <button
+        className="hover:text-red-500"
+        title="Não gostei"
+      >
+        <ThumbsDown size={14} />
+      </button>
+    </div>
+  )
+}
+
+/* ======================================================
+   MENSAGEM DO USUÁRIO (NÃO ALTERADA)
+   ====================================================== */
 
 export function UserMessage({ children }: { children: React.ReactNode }) {
   const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
 
   return (
     <div className="group relative flex flex-col items-end w-full md:-ml-12">
-
-      {/* Hora da mensagem */}
       <span className="text-[10px] text-gray-400 mb-1 pr-3">
         {time}
       </span>
 
-      {/* Container mensagem + avatar */}
       <div className="flex items-start justify-end w-full">
         <div className="flex-1 flex justify-end pr-2">
           <div className="w-fit max-w-[80%] rounded-xl bg-[#ff5722] px-4 py-2 text-white shadow">
@@ -39,6 +88,10 @@ export function UserMessage({ children }: { children: React.ReactNode }) {
   )
 }
 
+/* ======================================================
+   MENSAGEM DA IA (COM AÇÕES)
+   ====================================================== */
+
 export function BotMessage({
   content,
   className
@@ -47,13 +100,10 @@ export function BotMessage({
   className?: string
 }) {
   const text = useStreamableText(content)
-  // Pega a hora atual formatada (HH:MM)
   const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
 
   return (
     <div className={cn('group relative flex flex-col items-start md:-ml-12', className)}>
-      
-      {/* Hora da mensagem */}
       <span className="text-[10px] text-gray-400 mb-1 ml-[35px]">
         {time}
       </span>
@@ -62,6 +112,7 @@ export function BotMessage({
         <div className="flex size-[24px] shrink-0 select-none items-center justify-center rounded-md border bg-[#f55036] text-primary-foreground shadow-sm">
           <IconGroq />
         </div>
+
         <div className="ml-4 flex-1 space-y-2 overflow-hidden px-1">
           <MemoizedReactMarkdown
             className="prose break-words dark:prose-invert prose-p:leading-relaxed prose-pre:p-0"
@@ -70,7 +121,7 @@ export function BotMessage({
               p({ children }) {
                 return <p className="mb-2 last:mb-0">{children}</p>
               },
-              code({ node, inline, className, children, ...props }) {
+              code({ inline, className, children, ...props }) {
                 if (children.length) {
                   if (children[0] == '▍') {
                     return <span className="mt-1 animate-pulse cursor-default">▍</span>
@@ -101,11 +152,18 @@ export function BotMessage({
           >
             {text}
           </MemoizedReactMarkdown>
+
+          {/* AÇÕES DA IA (como na imagem) */}
+          <BotActions text={typeof text === 'string' ? text : ''} />
         </div>
       </div>
     </div>
   )
-          }
+}
+
+/* ======================================================
+   OUTROS COMPONENTES (SEM ALTERAÇÃO)
+   ====================================================== */
 
 export function BotCard({
   children,
@@ -131,12 +189,8 @@ export function BotCard({
 
 export function SystemMessage({ children }: { children: React.ReactNode }) {
   return (
-    <div
-      className={
-        'mt-2 flex items-center justify-center gap-2 text-xs text-gray-500'
-      }
-    >
-      <div className={'max-w-[600px] flex-initial p-2'}>{children}</div>
+    <div className="mt-2 flex items-center justify-center gap-2 text-xs text-gray-500">
+      <div className="max-w-[600px] flex-initial p-2">{children}</div>
     </div>
   )
 }
@@ -152,4 +206,4 @@ export function SpinnerMessage() {
       </div>
     </div>
   )
-        }
+  }
