@@ -13,7 +13,7 @@ import { useRouter } from 'next/navigation'
 import { useLocalStorage } from '@/lib/hooks/use-local-storage'
 import { motion, AnimatePresence } from 'framer-motion'
 
-/* 🔥 HISTÓRICO */
+/* Histórico */
 import {
   createChat,
   appendMessage,
@@ -37,7 +37,6 @@ export function PromptForm({
   const [apiKey] = useLocalStorage('groqKey', '')
   const [menuOpen, setMenuOpen] = React.useState(false)
 
-  /* 🧠 CHAT ATUAL */
   const [chatId, setChatId] = React.useState<string | null>(null)
 
   React.useEffect(() => {
@@ -118,7 +117,6 @@ export function PromptForm({
             if (!value) return
             setInput('')
 
-            /* UI imediata */
             setMessages(m => [
               ...m,
               { id: nanoid(), display: <UserMessage>{value}</UserMessage> }
@@ -126,7 +124,6 @@ export function PromptForm({
 
             let currentChatId = chatId
 
-            /* PRIMEIRA MENSAGEM → cria chat */
             if (!currentChatId) {
               const chat = createChat(value)
               const history = getHistory()
@@ -143,7 +140,6 @@ export function PromptForm({
               })
             }
 
-            /* IA */
             const response = await submitUserMessage(value, apiKey)
 
             setMessages(m => [...m, response])
@@ -160,7 +156,6 @@ export function PromptForm({
           rounded-2xl shadow-xl border-4 border-[#F05237]
           flex items-center gap-2 p-2 sm:p-3 animate-pulse-ia"
         >
-          {/* BOTÃO + */}
           <Button
             variant="ghost"
             size="icon"
@@ -174,7 +169,6 @@ export function PromptForm({
             />
           </Button>
 
-          {/* BOTÃO IMAGEM */}
           <Button
             type="button"
             variant="ghost"
@@ -198,7 +192,6 @@ export function PromptForm({
             </svg>
           </Button>
 
-          {/* INPUT FILE */}
           <input
             ref={fileInputRef}
             type="file"
@@ -230,19 +223,12 @@ export function PromptForm({
 
         <style jsx>{`
           @keyframes pulse-border-ia {
-            0%,
-            100% {
-              border-color: #f05237;
-            }
-            50% {
-              border-color: #ff8c6a;
-            }
+            0%, 100% { border-color: #F05237; }
+            50% { border-color: #FF8C6A; }
           }
-          .animate-pulse-ia {
-            animation: pulse-border-ia 1.2s infinite;
-          }
+          .animate-pulse-ia { animation: pulse-border-ia 1.2s infinite; }
         `}</style>
       </div>
     </div>
   )
-}
+                           }
