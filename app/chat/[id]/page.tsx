@@ -1,20 +1,26 @@
 'use client'
 
 import { useEffect } from 'react'
-import { useUIState } from 'ai/rsc'
 import { useParams } from 'next/navigation'
-import { getHistory } from '@/lib/chat/history'
+import { useUIState } from 'ai/rsc'
 import { UserMessage } from '@/components/stocks/message'
-import { AI } from 'ai'
+import { getHistory } from '@/lib/chat/history'
 
 export default function ChatPage() {
   const params = useParams()
-  const [_, setMessages] = useUIState<typeof AI>()
+  return <ChatLoader chatId={params.id} />
+}
+
+/* Componente que carrega as mensagens do chat histórico */
+function ChatLoader({ chatId }: { chatId: string }) {
+  const [_, setMessages] = useUIState()
 
   useEffect(() => {
-    const chat = getHistory().find(c => c.id === params.id)
+    // Pega o chat do histórico pelo id
+    const chat = getHistory().find(c => c.id === chatId)
     if (!chat) return
 
+    // Popula o estado do chat com mensagens
     setMessages(
       chat.messages.map(m => ({
         id: crypto.randomUUID(),
@@ -24,11 +30,7 @@ export default function ChatPage() {
             : m.content
       }))
     )
-  }, [])
+  }, [chatId, setMessages])
 
-  return (
-    <AI>
-      {/* O teu componente de chat real pode ir aqui */}
-    </AI>
-  )
-      }
+  return null
+}
