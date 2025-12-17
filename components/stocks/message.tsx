@@ -1,7 +1,6 @@
 'use client'
 
 import * as React from 'react'
-import { IconGroq, IconUser } from '@/components/ui/icons'
 import { cn } from '@/lib/utils'
 import { spinner } from './spinner'
 import { CodeBlock } from '../ui/codeblock'
@@ -10,68 +9,27 @@ import remarkGfm from 'remark-gfm'
 import remarkMath from 'remark-math'
 import { StreamableValue } from 'ai/rsc'
 import { useStreamableText } from '@/lib/hooks/use-streamable-text'
+
 import {
-  Copy,
-  RefreshCcw,
-  ThumbsUp,
-  ThumbsDown
-} from 'lucide-react'
+  IconGroq,
+  IconUser,
+  IconCopy,
+  IconRefresh,
+  IconCheck
+} from '@/components/ui/icons'
 
-/* ======================================================
-   AÇÕES DA MENSAGEM DA IA (copiar, regenerar, etc.)
-   ====================================================== */
-
-function BotActions({ text }: { text: string }) {
-  const copyToClipboard = async () => {
-    await navigator.clipboard.writeText(text)
-  }
-
-  return (
-    <div className="mt-2 flex items-center gap-3 text-gray-400 opacity-0 transition-opacity group-hover:opacity-100">
-      <button
-        onClick={copyToClipboard}
-        className="hover:text-gray-600 dark:hover:text-gray-300"
-        title="Copiar"
-      >
-        <Copy size={14} />
-      </button>
-
-      <button
-        className="hover:text-gray-600 dark:hover:text-gray-300"
-        title="Regenerar"
-      >
-        <RefreshCcw size={14} />
-      </button>
-
-      <button
-        className="hover:text-green-500"
-        title="Gostei"
-      >
-        <ThumbsUp size={14} />
-      </button>
-
-      <button
-        className="hover:text-red-500"
-        title="Não gostei"
-      >
-        <ThumbsDown size={14} />
-      </button>
-    </div>
-  )
-}
-
-/* ======================================================
-   MENSAGEM DO USUÁRIO (NÃO ALTERADA)
-   ====================================================== */
-
+// =====================
+// USER MESSAGE
+// =====================
 export function UserMessage({ children }: { children: React.ReactNode }) {
-  const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+  const time = new Date().toLocaleTimeString([], {
+    hour: '2-digit',
+    minute: '2-digit'
+  })
 
   return (
     <div className="group relative flex flex-col items-end w-full md:-ml-12">
-      <span className="text-[10px] text-gray-400 mb-1 pr-3">
-        {time}
-      </span>
+      <span className="text-[10px] text-gray-400 mb-1 pr-3">{time}</span>
 
       <div className="flex items-start justify-end w-full">
         <div className="flex-1 flex justify-end pr-2">
@@ -80,7 +38,7 @@ export function UserMessage({ children }: { children: React.ReactNode }) {
           </div>
         </div>
 
-        <div className="flex size-[25px] shrink-0 select-none items-center justify-center rounded-md border bg-background shadow-sm ml-2">
+        <div className="flex size-[25px] shrink-0 items-center justify-center rounded-md border bg-background shadow-sm ml-2">
           <IconUser />
         </div>
       </div>
@@ -88,10 +46,38 @@ export function UserMessage({ children }: { children: React.ReactNode }) {
   )
 }
 
-/* ======================================================
-   MENSAGEM DA IA (COM AÇÕES)
-   ====================================================== */
+// =====================
+// BOT ACTIONS (APENAS IA)
+// =====================
+function BotActions({ text }: { text: string }) {
+  const [copied, setCopied] = React.useState(false)
 
+  const handleCopy = async () => {
+    await navigator.clipboard.writeText(text)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 1500)
+  }
+
+  return (
+    <div className="mt-2 flex items-center gap-3 text-gray-400 opacity-0 transition-opacity group-hover:opacity-100">
+      <button onClick={handleCopy} title="Copiar">
+        {copied ? (
+          <IconCheck className="size-4 text-green-500" />
+        ) : (
+          <IconCopy className="size-4" />
+        )}
+      </button>
+
+      <button title="Regenerar">
+        <IconRefresh className="size-4" />
+      </button>
+    </div>
+  )
+}
+
+// =====================
+// BOT MESSAGE
+// =====================
 export function BotMessage({
   content,
   className
@@ -100,16 +86,17 @@ export function BotMessage({
   className?: string
 }) {
   const text = useStreamableText(content)
-  const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+  const time = new Date().toLocaleTimeString([], {
+    hour: '2-digit',
+    minute: '2-digit'
+  })
 
   return (
     <div className={cn('group relative flex flex-col items-start md:-ml-12', className)}>
-      <span className="text-[10px] text-gray-400 mb-1 ml-[35px]">
-        {time}
-      </span>
+      <span className="text-[10px] text-gray-400 mb-1 ml-[35px]">{time}</span>
 
       <div className="flex items-start">
-        <div className="flex size-[24px] shrink-0 select-none items-center justify-center rounded-md border bg-[#f55036] text-primary-foreground shadow-sm">
+        <div className="flex size-[24px] shrink-0 items-center justify-center rounded-md border bg-[#f55036] text-primary-foreground shadow-sm">
           <IconGroq />
         </div>
 
@@ -122,15 +109,6 @@ export function BotMessage({
                 return <p className="mb-2 last:mb-0">{children}</p>
               },
               code({ inline, className, children, ...props }) {
-                if (children.length) {
-                  if (children[0] == '▍') {
-                    return <span className="mt-1 animate-pulse cursor-default">▍</span>
-                  }
-                  children[0] = (children[0] as string).replace('`▍`', '▍')
-                }
-
-                const match = /language-(\w+)/.exec(className || '')
-
                 if (inline) {
                   return (
                     <code className={className} {...props}>
@@ -142,9 +120,8 @@ export function BotMessage({
                 return (
                   <CodeBlock
                     key={Math.random()}
-                    language={(match && match[1]) || ''}
+                    language=""
                     value={String(children).replace(/\n$/, '')}
-                    {...props}
                   />
                 )
               }
@@ -153,57 +130,26 @@ export function BotMessage({
             {text}
           </MemoizedReactMarkdown>
 
-          {/* AÇÕES DA IA (como na imagem) */}
-          <BotActions text={typeof text === 'string' ? text : ''} />
+          {/* 👇 BOTÕES SÓ DA IA */}
+          <BotActions text={text} />
         </div>
       </div>
     </div>
   )
 }
 
-/* ======================================================
-   OUTROS COMPONENTES (SEM ALTERAÇÃO)
-   ====================================================== */
-
-export function BotCard({
-  children,
-  showAvatar = true
-}: {
-  children: React.ReactNode
-  showAvatar?: boolean
-}) {
-  return (
-    <div className="group relative flex items-start md:-ml-12">
-      <div
-        className={cn(
-          'flex size-[24px] shrink-0 select-none items-center justify-center rounded-md border bg-[#f55036] text-primary-foreground shadow-sm',
-          !showAvatar && 'invisible'
-        )}
-      >
-        <IconGroq />
-      </div>
-      <div className="ml-4 flex-1 pl-2">{children}</div>
-    </div>
-  )
-}
-
-export function SystemMessage({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="mt-2 flex items-center justify-center gap-2 text-xs text-gray-500">
-      <div className="max-w-[600px] flex-initial p-2">{children}</div>
-    </div>
-  )
-}
-
+// =====================
+// SPINNER MESSAGE
+// =====================
 export function SpinnerMessage() {
   return (
     <div className="group relative flex items-start md:-ml-12">
-      <div className="flex size-[24px] shrink-0 select-none items-center justify-center rounded-md border bg-[#f55036] text-primary-foreground shadow-sm">
+      <div className="flex size-[24px] shrink-0 items-center justify-center rounded-md border bg-[#f55036] text-primary-foreground shadow-sm">
         <IconGroq />
       </div>
-      <div className="ml-4 h-[24px] flex flex-row items-center flex-1 space-y-2 overflow-hidden px-1">
+      <div className="ml-4 h-[24px] flex items-center flex-1 overflow-hidden px-1">
         {spinner}
       </div>
     </div>
   )
-  }
+}
