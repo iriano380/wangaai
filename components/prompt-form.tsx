@@ -7,12 +7,18 @@ import { UserMessage } from './stocks/message'
 import { type AI } from '@/lib/chat/actions'
 import { Button } from '@/components/ui/button'
 import { IconArrowDown, IconPlus } from '@/components/ui/icons'
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import { useEnterSubmit } from '@/lib/hooks/use-enter-submit'
 import { nanoid } from 'nanoid'
 import { useRouter } from 'next/navigation'
 import { useLocalStorage } from '@/lib/hooks/use-local-storage'
 import { motion, AnimatePresence } from 'framer-motion'
+
+/* 🔥 HISTÓRICO */
+import {
+  createChat,
+  appendMessage,
+  getHistory
+} from '@/lib/chat/history'
 
 export function PromptForm({
   input,
@@ -31,6 +37,9 @@ export function PromptForm({
   const [apiKey] = useLocalStorage('groqKey', '')
   const [menuOpen, setMenuOpen] = React.useState(false)
 
+  /* 🧠 CHAT ATUAL */
+  const [chatId, setChatId] = React.useState<string | null>(null)
+
   React.useEffect(() => {
     inputRef.current?.focus()
   }, [])
@@ -44,12 +53,6 @@ export function PromptForm({
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (!file) return
-
-    // Aqui futuramente podes:
-    // - enviar para API
-    // - mostrar preview
-    // - anexar ao prompt
-
     console.log('Imagem selecionada:', file)
   }
 
@@ -112,16 +115,46 @@ export function PromptForm({
           onSubmit={async e => {
             e.preventDefault()
             const value = input.trim()
-            setInput('')
             if (!value) return
+            setInput('')
 
+            /* UI imediata */
             setMessages(m => [
               ...m,
               { id: nanoid(), display: <UserMessage>{value}</UserMessage> }
             ])
 
+            let currentChatId = chatId
+
+            /* PRIMEIRA MENSAGEM → cria chat */
+            if (!currentChatId) {
+              const chat = createChat(value)
+              const history = getHistory()
+              localStorage.setItem(
+                'chat-history',
+                JSON.stringify([chat, ...history])
+              )
+              currentChatId = chat.id
+              setChatId(chat.id)
+            } else {
+              appendMessage(currentChatId, {
+                role: 'user',
+                content: value
+              })
+            }
+
+            /* IA */
             const response = await submitUserMessage(value, apiKey)
+
             setMessages(m => [...m, response])
+
+            appendMessage(currentChatId!, {
+              role: 'assistant',
+              content:
+                typeof response.display === 'string'
+                  ? response.display
+                  : response.display?.props?.children || ''
+            })
           }}
           className="w-full bg-white/90 dark:bg-gray-900/90 backdrop-blur-md
           rounded-2xl shadow-xl border-4 border-[#F05237]
@@ -134,7 +167,11 @@ export function PromptForm({
             onClick={() => setMenuOpen(v => !v)}
             className="rounded-full"
           >
-            <IconPlus className={`size-6 transition-transform ${menuOpen ? 'rotate-45' : ''}`} />
+            <IconPlus
+              className={`size-6 transition-transform ${
+                menuOpen ? 'rotate-45' : ''
+              }`}
+            />
           </Button>
 
           {/* BOTÃO IMAGEM */}
@@ -145,23 +182,23 @@ export function PromptForm({
             onClick={handleImageClick}
             className="rounded-full"
           >
-   <svg
-  xmlns="http://www.w3.org/2000/svg"
-  viewBox="0 0 24 24"
-  fill="none"
-  stroke="currentColor"
-  strokeWidth="1.5"
-  strokeLinecap="round"
-  strokeLinejoin="round"
-  className="w-6 h-6 text-gray-600 dark:text-gray-300"
->
-  <path d="M3 7h18v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z" />
-  <path d="M7 7l2-3h6l2 3" />
-  <circle cx="12" cy="13" r="3" />
-</svg>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="w-6 h-6 text-gray-600 dark:text-gray-300"
+            >
+              <path d="M3 7h18v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z" />
+              <path d="M7 7l2-3h6l2 3" />
+              <circle cx="12" cy="13" r="3" />
+            </svg>
           </Button>
 
-          {/* INPUT FILE INVISÍVEL */}
+          {/* INPUT FILE */}
           <input
             ref={fileInputRef}
             type="file"
@@ -181,8 +218,11 @@ export function PromptForm({
           />
 
           {hasText && (
-            <Button type="submit" size="icon"
-              className="rounded-full bg-[#F05237] text-white">
+            <Button
+              type="submit"
+              size="icon"
+              className="rounded-full bg-[#F05237] text-white"
+            >
               <IconArrowDown className="rotate-90" />
             </Button>
           )}
@@ -190,8 +230,13 @@ export function PromptForm({
 
         <style jsx>{`
           @keyframes pulse-border-ia {
-            0%,100% { border-color:#F05237 }
-            50% { border-color:#FF8C6A }
+            0%,
+            100% {
+              border-color: #f05237;
+            }
+            50% {
+              border-color: #ff8c6a;
+            }
           }
           .animate-pulse-ia {
             animation: pulse-border-ia 1.2s infinite;
@@ -200,4 +245,4 @@ export function PromptForm({
       </div>
     </div>
   )
-                    }
+}
